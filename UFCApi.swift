@@ -12,11 +12,12 @@ struct APIStrings {
     
     static  let newsURL = "http://ufc-data-api.ufc.com/api/v3/iphone/news"
     static  let mediaURL = "http://ufc-data-api.ufc.com/api/v3/iphone/media"
-    static  let titleHoldersURL = "http://ufc-data-api.ufc.com/api/v3/iphone/fighters/title_holders"
-    static  let fightersURL = "http://ufc-data-api.ufc.com/api/v3/iphone/fighters"
-    static  let statsFilterKeyValueURL = "http://ufc-data-api.ufc.com/api/v3/iphone/fighters/stats_filter_key_values"
-    static  let octagonGirlsURL = "http://ufc-data-api.ufc.com/api/v3/iphone/octagon_girls"
     static  let eventsURL = "http://ufc-data-api.ufc.com/api/v3/iphone/events"
+    
+    static  let titleHoldersURL = "http://ufc-data-api.ufc.com/api/v3/iphone/fighters/title_holders"
+    static  let octagonGirlsURL = "http://ufc-data-api.ufc.com/api/v3/iphone/octagon_girls"
+    
+    static  let fightersURL = "http://ufc-data-api.ufc.com/api/v3/iphone/fighters"
     
     //newsURL will produce an ID to be input for article
     func newsArticleURL(nID id: String) -> String {
@@ -27,10 +28,14 @@ struct APIStrings {
         return "http://ufc-data-api.ufc.com/api/v3/iphone/media/\(id)"
     }
     
+    //Basically Different way to filter the fighters
     //Born Country can have an empty string to bring back all countries.
+    static  let statsFilterKeyValueURL = "http://ufc-data-api.ufc.com/api/v3/iphone/fighters/stats_filter_key_values"
+    
     func fighterStats(wClass weightClass: String, bCountry bornCountry: String?) -> String {
         return "http://ufc-data-api.ufc.com/api/v3/iphone/fighters/stats/weight_class/:\(weightClass)/born_country/:\(bornCountry ?? "")"
     }
+    
     
     //Pass in a fighters name ex: conor-mcgregor. Must have dash. Must end in .json
     func detailedFighterStats(fighter name: String) -> String {
@@ -56,17 +61,23 @@ struct APIStrings {
 
 class UFCApi: NSObject {
     
-    //Holds the main UI data. Fighters, Events & TitleHolders.
-    var mainArray = [String]();
+    /* This will load the main table. When a user selects fighters it will display a large ist of fighters. I can parse them into sections if I wish with search etc. But lets get the data first. Once this finishes and saves, I will parse the .json file. I can then iterate over the names and pull the detailed stats.
+     */
+    //Once fighters load DO I pull the additional data right away or load that when a user clicks a fighter. Seems like the overhead up frint is massive.
+    //Display all fighters. Perform a cool animaion - grab the fighters ID and grab the news and media.
     
-    override init() {
-        mainArray = [APIStrings.fightersURL,APIStrings.eventsURL,APIStrings.titleHoldersURL]
-    }
-    /* This will load the main table. When a user selects fighters it will display a large ist of fighters. I can parse them into sections if I wish with search etc. But lets get the data first. Once this finishes and saves, I will parse the .json file. I can then iterate over the names and pull the detailed stats. 
-    */
     
-    func getJSOnObjects() {
+    func getJSOnObjects(url: String, fileName: String) {
         
+        let jsonString = APIStrings.fightersURL
+        
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        let writePath = documents + ("\(fileName).json")
+        
+        do {
+            try jsonString.write(toFile: writePath, atomically: true, encoding: String.Encoding.utf8)
+        } catch {
+            NSLog("Could not save to \(fileName).json")
+        }
     }
-    
 }

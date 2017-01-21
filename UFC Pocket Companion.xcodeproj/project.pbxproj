@@ -13,9 +13,12 @@
 		A5D2A92E1E3255BE001C7456 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5D2A92C1E3255BE001C7456 /* Main.storyboard */; };
 		A5D2A9301E3255BE001C7456 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5D2A92F1E3255BE001C7456 /* Assets.xcassets */; };
 		A5D2A9331E3255BE001C7456 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5D2A9311E3255BE001C7456 /* LaunchScreen.storyboard */; };
+		FF2ABFE4D1037E34D39F0874 /* Pods_UFC_Pocket_Companion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A69DC81F8CFB1A3524AE515F /* Pods_UFC_Pocket_Companion.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0896187AE1FF226C2077CE86 /* Pods-UFC Pocket Companion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UFC Pocket Companion.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UFC Pocket Companion/Pods-UFC Pocket Companion.debug.xcconfig"; sourceTree = "<group>"; };
+		5739541621944F715CD6635C /* Pods-UFC Pocket Companion.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UFC Pocket Companion.release.xcconfig"; path = "Pods/Target Support Files/Pods-UFC Pocket Companion/Pods-UFC Pocket Companion.release.xcconfig"; sourceTree = "<group>"; };
 		A5A3FE671E32864B00009B78 /* UFCApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UFCApi.swift; path = ../UFCApi.swift; sourceTree = "<group>"; };
 		A5D2A9251E3255BE001C7456 /* UFC Pocket Companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UFC Pocket Companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5D2A9281E3255BE001C7456 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +27,7 @@
 		A5D2A92F1E3255BE001C7456 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A5D2A9321E3255BE001C7456 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A5D2A9341E3255BE001C7456 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A69DC81F8CFB1A3524AE515F /* Pods_UFC_Pocket_Companion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UFC_Pocket_Companion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +35,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF2ABFE4D1037E34D39F0874 /* Pods_UFC_Pocket_Companion.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		86ADC4C10F590A9AC0DCF80B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A69DC81F8CFB1A3524AE515F /* Pods_UFC_Pocket_Companion.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		A5D2A91C1E3255BD001C7456 = {
 			isa = PBXGroup;
 			children = (
 				A5D2A9271E3255BE001C7456 /* UFC Pocket Companion */,
 				A5D2A9261E3255BE001C7456 /* Products */,
+				D3A56C01E3CDFA7E91EC3011 /* Pods */,
+				86ADC4C10F590A9AC0DCF80B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +82,15 @@
 			path = "UFC Pocket Companion";
 			sourceTree = "<group>";
 		};
+		D3A56C01E3CDFA7E91EC3011 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0896187AE1FF226C2077CE86 /* Pods-UFC Pocket Companion.debug.xcconfig */,
+				5739541621944F715CD6635C /* Pods-UFC Pocket Companion.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +98,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A5D2A9371E3255BE001C7456 /* Build configuration list for PBXNativeTarget "UFC Pocket Companion" */;
 			buildPhases = (
+				222791D05E6E9E4EE07DD753 /* [CP] Check Pods Manifest.lock */,
 				A5D2A9211E3255BD001C7456 /* Sources */,
 				A5D2A9221E3255BD001C7456 /* Frameworks */,
 				A5D2A9231E3255BD001C7456 /* Resources */,
+				04DE1322C18D5E71011B4805 /* [CP] Embed Pods Frameworks */,
+				F4B1CF7A3CF1CA44AF4BC938 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -134,6 +161,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		04DE1322C18D5E71011B4805 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UFC Pocket Companion/Pods-UFC Pocket Companion-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		222791D05E6E9E4EE07DD753 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F4B1CF7A3CF1CA44AF4BC938 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UFC Pocket Companion/Pods-UFC Pocket Companion-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A5D2A9211E3255BD001C7456 /* Sources */ = {
@@ -261,6 +336,7 @@
 		};
 		A5D2A9381E3255BE001C7456 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0896187AE1FF226C2077CE86 /* Pods-UFC Pocket Companion.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = YNEH3B8QJ7;
@@ -274,6 +350,7 @@
 		};
 		A5D2A9391E3255BE001C7456 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5739541621944F715CD6635C /* Pods-UFC Pocket Companion.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = YNEH3B8QJ7;
