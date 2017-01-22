@@ -15,7 +15,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         var jsonString = ""
+        var json : JSON
         
+        //Put on BG queue but make this an ultra high priority. This is quick.
         do {
             jsonString = try String(contentsOf:NSURL(string: APIStrings.fightersURL) as! URL, encoding: String.Encoding.utf8)
         } catch {
@@ -23,32 +25,47 @@ class ViewController: UIViewController {
         }
         
         if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-            
             let path = dir.appendingPathComponent("fighters.json")
             
-            //writing
             do {
                 try jsonString.write(to: path, atomically: false, encoding: String.Encoding.utf8)
             }
             catch {/* error handling here */}
             
-            //reading
+            //When the BG queue of fighters comes back , well get alerted to start this.
             do {
-                let fighterData = try Data(contentsOf: path)
-                let json = JSON(data: fighterData)
-                
-                let array = json
-                print("\(array[0]["first_name"])")
+                json = try JSON(data: Data(contentsOf: path))
+                var open: Int = 0
+                for i in 0 ... json.count {
+                    
+                    var fighter = Fighter.init(first: json[i]["first_name"].string, last: json[i]["last_name"].string, fighterId:44)
+                    fighter.fighter_status = json[i]["fighter_status"].string
+                    
+                    if fighter.name != "" && fighter.fighter_status == "Active" {
+                        let url = NSURL(string:APIStrings.detailedFighterStats(name:fighter.name!))
+                        open += 1
+                        print("Active fighters: \(open)")
+                        if url != nil {
+                            do {
+                                print("Trying url: \(url)")
+                                jsonString = try String(contentsOf:url as! URL, encoding: String.Encoding.utf8)
+                                print("\(jsonString) + \(i)")
+                            } catch {
+                                print("JSON does not exist:\n \(url)index:\(i)")
+                            }
+                        } else {
+                            print("url is nil::: Fighter = \(fighter.name)")
+                        }
+                    }
+                }
             }
-            catch {/* error handling here */}
+            catch {NSLog("This is not working")}
         }
-        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 }
 //Sort into male/female?
