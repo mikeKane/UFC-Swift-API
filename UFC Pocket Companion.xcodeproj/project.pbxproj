@@ -124,7 +124,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Mike Kane";
 				TargetAttributes = {
 					A5D2A9241E3255BD001C7456 = {
@@ -342,6 +342,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0896187AE1FF226C2077CE86 /* Pods-UFC Pocket Companion.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = YNEH3B8QJ7;
 				INFOPLIST_FILE = "UFC Pocket Companion/Info.plist";
@@ -356,6 +357,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5739541621944F715CD6635C /* Pods-UFC Pocket Companion.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = YNEH3B8QJ7;
 				INFOPLIST_FILE = "UFC Pocket Companion/Info.plist";

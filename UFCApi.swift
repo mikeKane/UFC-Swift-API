@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 struct APIStrings {
     
@@ -63,17 +64,49 @@ class UFCApi: NSObject {
     //Once fighters load DO I pull the additional data right away or load that when a user clicks a fighter. Seems like the overhead up frint is massive.
     //Display all fighters. Perform a cool animaion - grab the fighters ID and grab the news and media.
     
-    func getJSOnObjects(url: String, fileName: String) {
+    var jsonArray: Array<JSON>?
+    
+    func getJSOnObjects() {
         
-        let jsonString = APIStrings.fightersURL
+        var jsonString = ""
+        var json : JSON?
         
-        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-        let writePath = documents + ("\(fileName).json")
-        
-        do {
-            try jsonString.write(toFile: writePath, atomically: true, encoding: String.Encoding.utf8)
-        } catch {
-            NSLog("Could not save to \(fileName).json")
+        DispatchQueue.global(qos: .userInitiated).async {
+            
+            //Put on BG queue but make this an ultra high priority. This is quick.
+            do {
+                jsonString = try String(contentsOf:NSURL(string: APIStrings.fightersURL)! as URL, encoding: String.Encoding.utf8)
+            } catch {
+                print("Error with URL")
+            }
+            
+            if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+                let path = dir.appendingPathComponent("fighters.json")
+                
+                do {
+                    try jsonString.write(to: path, atomically: false, encoding: String.Encoding.utf8)
+                }
+                catch {/* error handling here */}
+                
+                do {
+                    json = try JSON(data: Data(contentsOf: path))
+                    let fighter = Fighter.init(first: json?[0]["first_name"].string, last: json?[0]["last_name"].string, fighterId:44)
+                    let url = NSURL(string:APIStrings.detailedFighterStats(name:fighter.name!))
+                    jsonString = try String(contentsOf:url! as URL, encoding: String.Encoding.utf8)
+                    
+                    //Might have to handle the writing manually not using swiftyJSON. use SwiftyJSON just for reading everythign.
+                    //Need to assign dictionary and then put it back
+                    
+                    //                json[0]["detailed_stats"] = "hi"
+                    self.jsonArray = (json?.array!)!
+                      print("\(self.jsonArray?.count ?? 0)")
+                }
+                catch {NSLog("This is not working")}
+            }
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "downloadFinished"), object: nil)
+                print("Download finished: \(json![0])")
+            }
         }
     }
 }
