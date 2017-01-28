@@ -12,14 +12,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBOutlet var tableView: UITableView!
     let ufc = UFCApi()
+    var cell = Cell()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(doDone), name:  NSNotification.Name.init(rawValue: "downloadFinished"), object: nil)
-        self.ufc.getJSOnObjects()
+        self.ufc.getJSOnObjects(url:URL(string: APIStrings.fightersURL)!, filename: "fighters.json")
+        NotificationCenter.default.addObserver(self, selector: #selector(downloadFinished), name:  NSNotification.Name.init(rawValue: "downloadFinished"), object: nil)
     }
     
-    func doDone(){
+    func downloadFinished(){
         self.tableView.reloadData()
     }
     
@@ -29,14 +30,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell")
+        cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! Cell
+        
         
         if (ufc.jsonArray?.count)! > 0 {
             if ufc.jsonArray?[indexPath.row]["first_name"].string != nil && ufc.jsonArray?[indexPath.row]["last_name"].string != nil {
-            cell?.textLabel?.text = (ufc.jsonArray?[indexPath.row]["first_name"].string)! + " " + (ufc.jsonArray?[indexPath.row]["last_name"].string!)!
+                cell.fighterName?.text = (ufc.jsonArray?[indexPath.row]["first_name"].string)! + " " + (ufc.jsonArray?[indexPath.row]["last_name"].string!)!
+                cell.nickName?.text = "Yo maria"
             }
         }
-        return cell!
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.tableView.deselectRow(at: indexPath, animated: true)
     }
 }
-//Sort into male/female?

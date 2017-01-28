@@ -54,7 +54,7 @@ struct Fighter {
      "city":"Parkland",
      "state":"WA"
      }*/
-    var fighthome: Dictionary<String, Any>?
+    var fighthome: Dictionary<String, String>?
     
     /*
      "home":{
@@ -62,7 +62,7 @@ struct Fighter {
      "city":"Madisonville",
      "state":"KY"
      },*/
-    var homeTown: Dictionary<String, Any>?
+    var homeTown: Dictionary<String, String>?
     
     init(first firstName: String?,last lastName: String?,fighterId fid: Int?) {
         

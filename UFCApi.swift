@@ -65,47 +65,49 @@ class UFCApi: NSObject {
     //Display all fighters. Perform a cool animaion - grab the fighters ID and grab the news and media.
     
     var jsonArray: Array<JSON>?
+    var jsonString = ""
     
-    func getJSOnObjects() {
+    //    let fighter = Fighter.init(first: jsonArray?[0]["first_name"].string, last: jsonArray?[0]["last_name"].string, fighterId:44)
+    //    let url = NSURL(string:APIStrings.detailedFighterStats(name:fighter.name!))
+    //    jsonString = try String(contentsOf:url! as URL, encoding: String.Encoding.utf8)
+    
+    func fighterJSON(path: URL) {
         
-        var jsonString = ""
-        var json : JSON?
+        do {
+            self.jsonArray = try JSON(data: Data(contentsOf: path)).array
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "downloadFinished"), object: nil)
+            }
+            return
+        } catch {NSLog("Cannot access Fight.json at path:\(path)")}
+    }
+    
+    func getJSOnObjects(url: URL,filename: String) {
+        
+        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        let path = dir?.appendingPathComponent(filename)
+        self.fighterJSON(path: path!)
         
         DispatchQueue.global(qos: .userInitiated).async {
-            
-            //Put on BG queue but make this an ultra high priority. This is quick.
+            //Grab contents of the URL
             do {
-                jsonString = try String(contentsOf:NSURL(string: APIStrings.fightersURL)! as URL, encoding: String.Encoding.utf8)
+                self.jsonString = try String(contentsOf:url, encoding: String.Encoding.utf8)
             } catch {
-                print("Error with URL")
+                print("Error with URL. \(url)")
             }
             
+            //Write contents of the URL
             if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-                let path = dir.appendingPathComponent("fighters.json")
+                let path = dir.appendingPathComponent(filename)
                 
                 do {
-                    try jsonString.write(to: path, atomically: false, encoding: String.Encoding.utf8)
-                }
-                catch {/* error handling here */}
+                    try self.jsonString.write(to: path, atomically: false, encoding: String.Encoding.utf8)
+                } catch { print("Error writing \(filename) to path -> \(url)") }
                 
-                do {
-                    json = try JSON(data: Data(contentsOf: path))
-                    let fighter = Fighter.init(first: json?[0]["first_name"].string, last: json?[0]["last_name"].string, fighterId:44)
-                    let url = NSURL(string:APIStrings.detailedFighterStats(name:fighter.name!))
-                    jsonString = try String(contentsOf:url! as URL, encoding: String.Encoding.utf8)
-                    
-                    //Might have to handle the writing manually not using swiftyJSON. use SwiftyJSON just for reading everythign.
-                    //Need to assign dictionary and then put it back
-                    
-                    //                json[0]["detailed_stats"] = "hi"
-                    self.jsonArray = (json?.array!)!
-                      print("\(self.jsonArray?.count ?? 0)")
-                }
-                catch {NSLog("This is not working")}
+                self.fighterJSON(path: path)
             }
             DispatchQueue.main.async {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "downloadFinished"), object: nil)
-                print("Download finished: \(json![0])")
             }
         }
     }
