@@ -32,11 +32,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! Cell
         
-        
         if (ufc.jsonArray?.count)! > 0 {
             if ufc.jsonArray?[indexPath.row]["first_name"].string != nil && ufc.jsonArray?[indexPath.row]["last_name"].string != nil {
                 cell.fighterName?.text = (ufc.jsonArray?[indexPath.row]["first_name"].string)! + " " + (ufc.jsonArray?[indexPath.row]["last_name"].string!)!
-                cell.nickName?.text = "Yo maria"
+                cell.nickName?.text = (ufc.jsonArray?[indexPath.row]["nickname"].string)
+                cell.wightClassLabel.text = (ufc.jsonArray?[indexPath.row]["weight_class"].string)
+                let rank = (ufc.jsonArray?[indexPath.row]["rank"].string) ?? "NR"
+                cell.rankLabel.text = "Rank: " + rank
+                cell.winValueLabel.text = "\((ufc.jsonArray?[indexPath.row]["wins"].intValue)!)"
+                cell.lossValueLabel.text = "\((ufc.jsonArray?[indexPath.row]["losses"].intValue)!)"
             }
         }
         return cell
