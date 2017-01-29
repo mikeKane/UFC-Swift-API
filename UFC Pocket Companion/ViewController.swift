@@ -10,7 +10,7 @@
  Notes: When scrolling on tableview. When you scroll past the first loaded fighters have the segment/search bar dissapear. Have it reappear when scrolling back up
  
  Note 2: Put a magnifying glass sit top right. When pressed the search bar comes in from the right and the segment leaves to the left. REVERSE that when tapped again.
-*/
+ */
 import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -39,23 +39,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         if (ufc.jsonArray?.count)! > 0 {
             
-            //Need to cast entrire array to a Fighter Struct. Pass in fighter.name etc.. 
+            let currentFighter = Fighter(json: (ufc.jsonArray?[indexPath.row])!)
+
+            cell.fighterName?.text = currentFighter.name
+            cell.nickName?.text = currentFighter.nickname
             
-            if ufc.jsonArray?[indexPath.row]["first_name"].string != nil && ufc.jsonArray?[indexPath.row]["last_name"].string != nil {
-                cell.fighterName?.text = (ufc.jsonArray?[indexPath.row]["first_name"].string)! + " " + (ufc.jsonArray?[indexPath.row]["last_name"].string!)!
-                cell.nickName?.text = (ufc.jsonArray?[indexPath.row]["nickname"].string)
-                cell.wightClassLabel.text = (ufc.jsonArray?[indexPath.row]["weight_class"].string)
-                let rank = (ufc.jsonArray?[indexPath.row]["rank"].string) ?? "NR"
-                cell.rankLabel.text = "Rank: " + rank
-                cell.winValueLabel.text = "\((ufc.jsonArray?[indexPath.row]["wins"].intValue)!)"
-                cell.lossValueLabel.text = "\((ufc.jsonArray?[indexPath.row]["losses"].intValue)!)"
-                
-                do {
-                    
-                    cell.fighterImage.image = try UIImage(data: NSData.init(contentsOf: URL(string: (ufc.jsonArray?[indexPath.row]["profile_image"].string)!)!) as Data)
-                } catch {
-                    
-                }
+            cell.wightClassLabel.text = (ufc.jsonArray?[indexPath.row]["weight_class"].string)
+            let rank = (ufc.jsonArray?[indexPath.row]["rank"].string) ?? "NR"
+            cell.rankLabel.text = "Rank: " + rank
+            cell.winValueLabel.text = "\((ufc.jsonArray?[indexPath.row]["wins"].intValue)!)"
+            cell.lossValueLabel.text = "\((ufc.jsonArray?[indexPath.row]["losses"].intValue)!)"
+            
+            do {
+                cell.fighterImage.image = try UIImage(data: NSData.init(contentsOf: URL(string: (ufc.jsonArray?[indexPath.row]["profile_image"].string)!)!) as Data)
+            } catch {
+                NSLog("Could not GET image from URL:\(URL(string: (ufc.jsonArray?[indexPath.row]["profile_image"].string)!)!))")
             }
         }
         return cell

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 struct Fighter {
     
@@ -62,16 +63,27 @@ struct Fighter {
      "city":"Madisonville",
      "state":"KY"
      },*/
+    
+    /*
+     var statid: Int?
+     var titleHolder: Bool?
+     var fighter_status: String?
+     var ufclink: String?
+     */
     var homeTown: Dictionary<String, String>?
     
-    init(first firstName: String?,last lastName: String?,fighterId fid: Int?) {
+    init(json: JSON) {
+        self.id = json["id"].intValue
+        self.name = self.getName(firstName: json["first_name"].string, lastName: json["last_name"].string)
+        self.nickname = json["nickname"].string
+    }
+    
+  private func getName(firstName: String?, lastName: String?) -> String {
         
         if (firstName == nil || lastName == nil) {
-            name = ""
-            id = 9
+            return "To Be Determined..."
         } else {
-            name = firstName! + "-" + lastName!
-            id = fid!
+            return firstName! + "-" + lastName!
         }
     }
 }

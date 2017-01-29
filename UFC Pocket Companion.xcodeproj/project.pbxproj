@@ -56,6 +56,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A52DD2761E3E912B004DED84 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				A530C9BD1E3E49DE00911965 /* Sternbach Bold Italic.otf */,
+			);
+			name = SupportingFiles;
+			sourceTree = "<group>";
+		};
 		A5D2A91C1E3255BD001C7456 = {
 			isa = PBXGroup;
 			children = (
@@ -83,7 +91,7 @@
 				A5A3FE671E32864B00009B78 /* UFCApi.swift */,
 				A5D2A92C1E3255BE001C7456 /* Main.storyboard */,
 				A530C9BB1E3D51BE00911965 /* Cell.swift */,
-				A530C9BD1E3E49DE00911965 /* Sternbach Bold Italic.otf */,
+				A52DD2761E3E912B004DED84 /* SupportingFiles */,
 				A5D2A92F1E3255BE001C7456 /* Assets.xcassets */,
 				A5D2A9311E3255BE001C7456 /* LaunchScreen.storyboard */,
 				A5D2A9341E3255BE001C7456 /* Info.plist */,

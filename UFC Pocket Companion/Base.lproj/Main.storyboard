@@ -41,7 +41,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="139.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fighterImage" translatesAutoresizingMaskIntoConstraints="NO" id="QB6-zh-jg4">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="QB6-zh-jg4">
                                                     <rect key="frame" x="8" y="5" width="103" height="130"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="QB6-zh-jg4" secondAttribute="height" multiplier="103:130" id="WWQ-0k-2Nm"/>
@@ -205,6 +205,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="fighterImage" width="600" height="600"/>
+        <image name="default" width="600" height="600"/>
     </resources>
 </document>
