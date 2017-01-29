@@ -43,18 +43,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
             cell.fighterName?.text = currentFighter.name
             cell.nickName?.text = currentFighter.nickname
+            cell.fighterImage.image = currentFighter.profileImage
             
             cell.wightClassLabel.text = (ufc.jsonArray?[indexPath.row]["weight_class"].string)
             let rank = (ufc.jsonArray?[indexPath.row]["rank"].string) ?? "NR"
             cell.rankLabel.text = "Rank: " + rank
             cell.winValueLabel.text = "\((ufc.jsonArray?[indexPath.row]["wins"].intValue)!)"
             cell.lossValueLabel.text = "\((ufc.jsonArray?[indexPath.row]["losses"].intValue)!)"
-            
-            do {
-                cell.fighterImage.image = try UIImage(data: NSData.init(contentsOf: URL(string: (ufc.jsonArray?[indexPath.row]["profile_image"].string)!)!) as Data)
-            } catch {
-                NSLog("Could not GET image from URL:\(URL(string: (ufc.jsonArray?[indexPath.row]["profile_image"].string)!)!))")
-            }
         }
         return cell
     }

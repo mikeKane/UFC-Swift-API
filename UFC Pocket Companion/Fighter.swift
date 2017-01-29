@@ -18,6 +18,7 @@ struct Fighter {
     var titleHolder: Bool?
     var fighter_status: String?
     var ufclink: String?
+    var profileImage: UIImage?
     
     //Image URLs
     var right_full_body_image: String?
@@ -76,9 +77,21 @@ struct Fighter {
         self.id = json["id"].intValue
         self.name = self.getName(firstName: json["first_name"].string, lastName: json["last_name"].string)
         self.nickname = json["nickname"].string
+        self.profileImage = self.getImage(url: json["profile_image"].string!)
     }
     
-  private func getName(firstName: String?, lastName: String?) -> String {
+    private func getImage(url: String) -> UIImage? {
+        
+        do {
+            let data = try Data.init(contentsOf:URL(string:url)!)
+            return UIImage(data:data)!
+        } catch {
+            NSLog("Could not GET image from URL:\(url)")
+            return nil
+        }
+    }
+    
+    private func getName(firstName: String?, lastName: String?) -> String {
         
         if (firstName == nil || lastName == nil) {
             return "To Be Determined..."
