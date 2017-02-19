@@ -12,6 +12,8 @@
  Note 2: Put a magnifying glass sit top right. When pressed the search bar comes in from the right and the segment leaves to the left. REVERSE that when tapped again.
  */
 import UIKit
+import AlamofireImage
+import Alamofire
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -40,18 +42,36 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if (ufc.jsonArray?.count)! > 0 {
             
             let currentFighter = Fighter(json: (ufc.jsonArray?[indexPath.row])!)
-
+            
             cell.fighterName?.text = currentFighter.name
             cell.nickName?.text = currentFighter.nickname
-            cell.fighterImage.image = currentFighter.profileImage
             
-            cell.wightClassLabel.text = (ufc.jsonArray?[indexPath.row]["weight_class"].string)
-            let rank = (ufc.jsonArray?[indexPath.row]["rank"].string) ?? "NR"
-            cell.rankLabel.text = "Rank: " + rank
-            cell.winValueLabel.text = "\((ufc.jsonArray?[indexPath.row]["wins"].intValue)!)"
-            cell.lossValueLabel.text = "\((ufc.jsonArray?[indexPath.row]["losses"].intValue)!)"
+            if currentFighter.profile_image != nil {
+                
+                Alamofire.request(URL(string: currentFighter.profile_image!)!).responseImage { response in
+                    
+                    NSLog("\(String(describing:currentFighter.profile_image)))")
+                    
+                    if let image = response.result.value {
+                        DispatchQueue.main.async {
+                            self.cell = tableView.cellForRow(at: indexPath) as! Cell
+                            self.cell.fighterImage?.image = image as UIImage?
+                        }
+                    }
+                }
+            }
+            //
+            //            cell.wightClassLabel.text = (ufc.jsonArray?[indexPath.row]["weight_class"].string)
+            //            let rank = (ufc.jsonArray?[indexPath.row]["rank"].string) ?? "NR"
+            //            cell.rankLabel.text = "Rank: " + rank
+            //            cell.winValueLabel.text = "\((ufc.jsonArray?[indexPath.row]["wins"].intValue)!)"
+            //            cell.lossValueLabel.text = "\((ufc.jsonArray?[indexPath.row]["losses"].intValue)!)"
         }
         return cell
+    }
+    
+    func getProfileImage(url: String) {
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

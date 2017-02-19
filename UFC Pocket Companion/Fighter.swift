@@ -8,8 +8,10 @@
 
 import Foundation
 import SwiftyJSON
+import Alamofire
+import AlamofireImage
 
-struct Fighter {
+class Fighter {
     
     var id: Int
     var name: String?
@@ -77,17 +79,19 @@ struct Fighter {
         self.id = json["id"].intValue
         self.name = self.getName(firstName: json["first_name"].string, lastName: json["last_name"].string)
         self.nickname = json["nickname"].string
-        self.profileImage = self.getImage(url: json["profile_image"].string!)
+        self.profile_image = json["profile_image"].string
     }
     
-    private func getImage(url: String) -> UIImage? {
-        
-        do {
-            let data = try Data.init(contentsOf:URL(string:url)!)
-            return UIImage(data:data)!
-        } catch {
-            NSLog("Could not GET image from URL:\(url)")
-            return nil
+    private func getImage(url: String){
+
+        Alamofire.request(url).responseImage { response in
+            
+            if let image = response.result.value {
+                DispatchQueue.main.async {
+                    self.profileImage = image
+                    print("\(String(describing: self.profileImage))")
+                }
+            }
         }
     }
     
