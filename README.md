@@ -1,4 +1,7 @@
 # UFC-Swift-API
-Repo for UFC Pocket Companion. iOS APP
+
+This will be a swift wrapper around the unoffical UFC REST API
+
+http://ufc-data-api.ufc.com
 
 ### Work in progress
